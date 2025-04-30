@@ -26,7 +26,7 @@ function Home() {
           </span>
         </h1>
         <p className="text-lg sm:text-2xl max-w-xl mb-4">
-          Upload a building. Get architectural insight.
+          Upload a building. Get architectural insight. Evolve Your Design!
         </p>
         <Link
           to="/upload"
