@@ -18,10 +18,10 @@ function UploadPage() {
     formData.append("image", file);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/critique", formData, {
+      const res = await axios.post("https://wall-conclusion-invest-reggae.trycloudflare.com/api/critique", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
+      
       setCritique(res.data.result || "No critique returned.");
     } catch (err) {
       console.error("Upload failed:", err);
