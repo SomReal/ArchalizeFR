@@ -5,7 +5,14 @@ const { OpenAI } = require('openai');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+const cors = require('cors');
+
+app.use(cors({
+  origin: 'https://www.archalize.com', // allow frontend hosted on Vercel
+  methods: ['POST'],
+  credentials: true,
+}));
+
 app.use(express.json());
 
 const upload = multer({ storage: multer.memoryStorage() });
