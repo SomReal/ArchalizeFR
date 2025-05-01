@@ -18,7 +18,7 @@ function UploadPage() {
     formData.append("image", file);
 
     try {
-      const res = await axios.post("https://wall-conclusion-invest-reggae.trycloudflare.com/api/critique", formData, {
+      const res = await axios.post("https://screw-mortgages-recent-mpegs.trycloudflare.com/api/critique", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       
