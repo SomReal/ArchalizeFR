@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
 function UploadPage() {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/auth");
+    }
+  }, [user, navigate]);
+
   const [imagePreview, setImagePreview] = useState(null);
   const [critique, setCritique] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,7 +32,6 @@ function UploadPage() {
       const res = await axios.post("https://screw-mortgages-recent-mpegs.trycloudflare.com/api/critique", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      
       setCritique(res.data.result || "No critique returned.");
     } catch (err) {
       console.error("Upload failed:", err);
@@ -33,8 +41,25 @@ function UploadPage() {
     setLoading(false);
   };
 
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
+  };
+
   return (
     <>
+      <div className="absolute top-4 right-4">
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </div>
+
       <nav className="absolute top-4 left-6 z-10">
         <Link
           to="/"
@@ -44,10 +69,10 @@ function UploadPage() {
           <span className="text-sm font-medium">Home</span>
         </Link>
       </nav>
-  
+
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#1E293B] font-sans px-6 text-white">
         <h1 className="text-3xl font-bold mb-6">Upload a Building Photo</h1>
-  
+
         <input
           type="file"
           accept="image/*"
@@ -58,18 +83,18 @@ function UploadPage() {
             file:bg-yellow-400 file:text-black
             hover:file:bg-yellow-300"
         />
-  
+
         {imagePreview && (
           <div className="mt-6 flex flex-col items-center">
             <h2 className="text-xl font-semibold mb-2 text-white">Preview:</h2>
             <img src={imagePreview} alt="Uploaded Preview" className="w-80 rounded-lg shadow-lg mb-6" />
           </div>
         )}
-  
+
         {loading && (
           <p className="text-yellow-400 text-lg font-semibold animate-pulse">Analyzing with AI...</p>
         )}
-  
+
         {critique && (
           <div className="mt-6 bg-white text-[#1E293B] p-6 rounded-lg shadow-lg max-w-2xl">
             <h2 className="text-2xl font-bold mb-4 text-center">Architectural Critique</h2>
@@ -79,7 +104,6 @@ function UploadPage() {
       </div>
     </>
   );
-  
 }
 
 export default UploadPage;
