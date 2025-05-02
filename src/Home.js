@@ -15,7 +15,7 @@ function Home() {
       {/* Hero Section */}
       <section className="h-[100dvh] flex flex-col items-center justify-center text-center px-6">
         <img
-          src="/Archalize-SoloNOBGLO.png"
+          src="/Archalize-SoloNOBG.png"
           alt="Archalize Logo"
           className="w-[300px] h-[300px] mb-4"
         />

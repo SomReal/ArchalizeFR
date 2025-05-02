@@ -9,7 +9,7 @@ function About() {
       <img
         src="/Archalize-SoloNOBGLO.png"
         alt="Background Owl Logo"
-        className="absolute inset-0 w-[1200px] opacity-[0.05] mx-auto pointer-events-none select-none"
+        className="absolute inset-0 w-[1200px] opacity-[0.8] mx-auto pointer-events-none select-none"
         style={{ top: "5%", left: "0", right: "0", margin: "0 auto", zIndex: 0 }}
       />
 
