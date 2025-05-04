@@ -5,7 +5,6 @@ import { useAuth } from "./AuthContext";
 import { db } from "./firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-
 function UploadPage() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -27,7 +26,6 @@ function UploadPage() {
     setCritique("");
     setImagePreview(URL.createObjectURL(file));
     setLoading(true);
-    
 
     const formData = new FormData();
     formData.append("image", file);
@@ -36,11 +34,14 @@ function UploadPage() {
       const res = await axios.post("https://ai.archalize.com/api/critique", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      setCritique(res.data.result || "No critique returned.");
+
+      const critiqueText = res.data.result || "No critique returned.";
+      setCritique(critiqueText);
+
       if (user) {
         try {
           await addDoc(collection(db, "users", user.uid, "critiques"), {
-            critique: res.data.result || "No critique returned.",
+            critique: critiqueText,
             timestamp: serverTimestamp(),
           });
         } catch (err) {
@@ -65,14 +66,21 @@ function UploadPage() {
 
   return (
     <>
-      <div className="absolute top-4 right-4">
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
-      </div>
+     <div className="absolute top-4 right-4 flex items-center gap-4">
+  <Link
+    to="/history"
+    className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-semibold"
+  >
+    View History
+  </Link>
+  <button
+    onClick={handleLogout}
+    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+  >
+    Logout
+  </button>
+</div>
+
 
       <nav className="absolute top-4 left-6 z-10">
         <Link
