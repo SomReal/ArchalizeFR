@@ -47,7 +47,7 @@ return (
         }}
         className="bg-yellow-400 text-black font-semibold px-6 py-3 rounded-2xl shadow-md hover:bg-yellow-300 transition"
       >
-        Try It Now
+        Try It Now!
       </button>
     </section>
   </div>

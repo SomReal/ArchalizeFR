@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+import { db } from "./firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+
 
 function UploadPage() {
   const { user, logout } = useAuth();
@@ -24,15 +27,26 @@ function UploadPage() {
     setCritique("");
     setImagePreview(URL.createObjectURL(file));
     setLoading(true);
+    
 
     const formData = new FormData();
     formData.append("image", file);
 
     try {
-      const res = await axios.post("https://screw-mortgages-recent-mpegs.trycloudflare.com/api/critique", formData, {
+      const res = await axios.post("https://ai.archalize.com/api/critique", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setCritique(res.data.result || "No critique returned.");
+      if (user) {
+        try {
+          await addDoc(collection(db, "users", user.uid, "critiques"), {
+            critique: res.data.result || "No critique returned.",
+            timestamp: serverTimestamp(),
+          });
+        } catch (err) {
+          console.error("Failed to save critique:", err);
+        }
+      }
     } catch (err) {
       console.error("Upload failed:", err);
       setCritique("An error occurred while getting AI critique.");

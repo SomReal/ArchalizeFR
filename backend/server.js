@@ -5,7 +5,6 @@ const { OpenAI } = require('openai');
 require('dotenv').config();
 
 const app = express();
-const cors = require('cors');
 
 app.use(cors({
   origin: 'https://www.archalize.com', // allow frontend hosted on Vercel
