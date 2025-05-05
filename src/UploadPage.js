@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { db } from "./firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "./firebase"; // Make sure storage is exported from firebase.js
+
 
 function UploadPage() {
   const { user, logout } = useAuth();
@@ -22,39 +25,43 @@ function UploadPage() {
   const handleImageChange = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
-
+  
     setCritique("");
     setImagePreview(URL.createObjectURL(file));
     setLoading(true);
-
+  
     const formData = new FormData();
     formData.append("image", file);
-
+  
     try {
       const res = await axios.post("https://ai.archalize.com/api/critique", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-
+  
       const critiqueText = res.data.result || "No critique returned.";
       setCritique(critiqueText);
-
+  
       if (user) {
-        try {
-          await addDoc(collection(db, "users", user.uid, "critiques"), {
-            critique: critiqueText,
-            timestamp: serverTimestamp(),
-          });
-        } catch (err) {
-          console.error("Failed to save critique:", err);
-        }
+        // Upload image to Firebase Storage
+        const imageRef = ref(storage, `uploads/${user.uid}/${Date.now()}-${file.name}`);
+        await uploadBytes(imageRef, file);
+        const imageUrl = await getDownloadURL(imageRef);
+  
+        // Save to Firestore
+        await addDoc(collection(db, "users", user.uid, "critiques"), {
+          critique: critiqueText,
+          imageUrl,
+          timestamp: serverTimestamp(),
+        });
       }
     } catch (err) {
       console.error("Upload failed:", err);
       setCritique("An error occurred while getting AI critique.");
     }
-
+  
     setLoading(false);
   };
+  
 
   const handleLogout = async () => {
     try {

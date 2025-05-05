@@ -58,6 +58,13 @@ export default function HistoryPage() {
               key={entry.id}
               className="bg-white text-[#1E293B] p-6 rounded-lg shadow-lg"
             >
+              {entry.imageUrl && (
+                <img
+                  src={entry.imageUrl}
+                  alt="Uploaded"
+                  className="w-full max-w-sm mx-auto mb-4 rounded-lg shadow"
+                />
+              )}
               <p className="whitespace-pre-wrap">{entry.critique}</p>
               <p className="text-right text-sm text-gray-600 mt-2">
                 {entry.timestamp?.toDate().toLocaleString()}
