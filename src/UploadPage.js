@@ -21,49 +21,50 @@ function UploadPage() {
   const [imagePreview, setImagePreview] = useState(null);
   const [critique, setCritique] = useState("");
   const [loading, setLoading] = useState(false);
-  const [isSaved, setIsSaved] = useState(false);
-
 
   const handleImageChange = async (event) => {
   const file = event.target.files[0];
   if (!file) return;
 
   setCritique("");
-  setIsSaved(false); // 🔥 Reset save button on new image
   setImagePreview(URL.createObjectURL(file));
   setLoading(true);
-  
-    const formData = new FormData();
-    formData.append("image", file);
-  
-    try {
-      const res = await axios.post("https://ai.archalize.com/api/critique", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+
+  const formData = new FormData();
+  formData.append("image", file);
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
+  const imageBase64 = await toBase64(file);
+
+  try {
+    const res = await axios.post("https://ai.archalize.com/api/critique", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    const critiqueText = res.data.result || "No critique returned.";
+    setCritique(critiqueText);
+
+    if (user) {
+      await addDoc(collection(db, "users", user.uid, "critiques"), {
+        critique: critiqueText,
+        image: imageBase64,
+        timestamp: serverTimestamp(),
       });
-  
-      const critiqueText = res.data.result || "No critique returned.";
-      setCritique(critiqueText);
-  
-      if (user) {
-        // Upload image to Firebase Storage
-        const imageRef = ref(storage, `uploads/${user.uid}/${Date.now()}-${file.name}`);
-        await uploadBytes(imageRef, file);
-        const imageUrl = await getDownloadURL(imageRef);
-  
-        // Save to Firestore
-        await addDoc(collection(db, "users", user.uid, "critiques"), {
-          critique: critiqueText,
-          imageUrl,
-          timestamp: serverTimestamp(),
-        });
-      }
-    } catch (err) {
-      console.error("Upload failed:", err);
-      setCritique("An error occurred while getting AI critique.");
     }
-  
-    setLoading(false);
-  };
+  } catch (err) {
+    console.error("Upload failed:", err);
+    setCritique("An error occurred while getting AI critique.");
+  }
+
+  setLoading(false);
+};
   
 
   const handleLogout = async () => {
@@ -73,22 +74,6 @@ function UploadPage() {
       console.error("Logout failed", err);
     }
   };
-  const handleSaveCritique = async () => {
-  if (!user || !critique) return;
-
-  try {
-    await addDoc(collection(db, "users", user.uid, "critiques"), {
-      critique,
-      timestamp: serverTimestamp(),
-    });
-    setIsSaved(true);
-    alert("Critique saved!");
-  } catch (err) {
-    console.error("Error saving critique:", err);
-    alert("Failed to save critique.");
-  }
-};
-
 
   return (
     <>
@@ -148,22 +133,6 @@ function UploadPage() {
             <h2 className="text-2xl font-bold mb-4 text-center">Architectural Critique</h2>
             <p className="text-lg whitespace-pre-wrap">{critique}</p>
                 <div className="mt-4 text-center">
-      {!isSaved ? (
-        <button
-  onClick={handleSaveCritique}
-  disabled={isSaved}
-  className={`px-4 py-2 rounded font-semibold ${
-    isSaved
-      ? "bg-gray-400 text-white cursor-not-allowed"
-      : "bg-yellow-400 text-black hover:bg-yellow-300"
-  }`}
->
-  {isSaved ? "Critique Saved" : "Save Critique"}
-</button>
-
-      ) : (
-        <p className="text-green-600 font-medium">Critique saved!</p>
-      )}
     </div>
 
           </div>
