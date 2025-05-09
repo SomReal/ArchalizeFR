@@ -3,6 +3,8 @@ import { useAuth } from "./AuthContext";
 import { db } from "./firebase";
 import { collection, getDocs, query, orderBy } from "firebase/firestore";
 import { Link, useNavigate } from "react-router-dom";
+import { doc, deleteDoc } from "firebase/firestore";
+
 
 export default function HistoryPage() {
   const { user } = useAuth();
@@ -35,6 +37,22 @@ export default function HistoryPage() {
     fetchCritiques();
   }, [user, navigate]);
 
+  const handleDelete = async (critiqueId) => {
+  if (!user || !critiqueId) return;
+
+  const confirmed = window.confirm("Are you sure you want to delete this critique?");
+  if (!confirmed) return;
+
+  try {
+    await deleteDoc(doc(db, "users", user.uid, "critiques", critiqueId));
+    setCritiques(prev => prev.filter(c => c.id !== critiqueId));
+  } catch (err) {
+    console.error("Error deleting critique:", err);
+  }
+};
+
+
+
   return (
     <div className="bg-[#1E293B] min-h-screen text-white font-sans px-6 py-10">
       <nav className="mb-8">
@@ -53,7 +71,7 @@ export default function HistoryPage() {
         <p className="text-center text-lg">No critiques found.</p>
       ) : (
         <div className="space-y-6 max-w-4xl mx-auto">
-          {critiques.map((entry) => (
+          {critiques.map((entry) => (        
   <div
     key={entry.id}
     className="bg-white text-[#1E293B] p-6 rounded-lg shadow-lg"
@@ -66,9 +84,18 @@ export default function HistoryPage() {
       />
     )}
     <p className="whitespace-pre-wrap">{entry.critique}</p>
-    <p className="text-right text-sm text-gray-600 mt-2">
-      {entry.timestamp?.toDate().toLocaleString()}
-    </p>
+    <div className="mt-2 flex justify-between items-center">
+  <button
+    onClick={() => handleDelete(entry.id)}
+    className="text-red-500 hover:underline text-sm"
+  >
+    Delete
+  </button>
+  <p className="text-sm text-gray-600">
+    {entry.timestamp?.toDate().toLocaleString()}
+  </p>
+</div>
+
   </div>
 ))}
 
