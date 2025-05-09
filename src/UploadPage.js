@@ -21,14 +21,17 @@ function UploadPage() {
   const [imagePreview, setImagePreview] = useState(null);
   const [critique, setCritique] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+
 
   const handleImageChange = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-  
-    setCritique("");
-    setImagePreview(URL.createObjectURL(file));
-    setLoading(true);
+  const file = event.target.files[0];
+  if (!file) return;
+
+  setCritique("");
+  setIsSaved(false); // 🔥 Reset save button on new image
+  setImagePreview(URL.createObjectURL(file));
+  setLoading(true);
   
     const formData = new FormData();
     formData.append("image", file);
@@ -70,6 +73,22 @@ function UploadPage() {
       console.error("Logout failed", err);
     }
   };
+  const handleSaveCritique = async () => {
+  if (!user || !critique) return;
+
+  try {
+    await addDoc(collection(db, "users", user.uid, "critiques"), {
+      critique,
+      timestamp: serverTimestamp(),
+    });
+    setIsSaved(true);
+    alert("Critique saved!");
+  } catch (err) {
+    console.error("Error saving critique:", err);
+    alert("Failed to save critique.");
+  }
+};
+
 
   return (
     <>
@@ -128,6 +147,25 @@ function UploadPage() {
           <div className="mt-6 bg-white text-[#1E293B] p-6 rounded-lg shadow-lg max-w-2xl">
             <h2 className="text-2xl font-bold mb-4 text-center">Architectural Critique</h2>
             <p className="text-lg whitespace-pre-wrap">{critique}</p>
+                <div className="mt-4 text-center">
+      {!isSaved ? (
+        <button
+  onClick={handleSaveCritique}
+  disabled={isSaved}
+  className={`px-4 py-2 rounded font-semibold ${
+    isSaved
+      ? "bg-gray-400 text-white cursor-not-allowed"
+      : "bg-yellow-400 text-black hover:bg-yellow-300"
+  }`}
+>
+  {isSaved ? "Critique Saved" : "Save Critique"}
+</button>
+
+      ) : (
+        <p className="text-green-600 font-medium">Critique saved!</p>
+      )}
+    </div>
+
           </div>
         )}
       </div>
