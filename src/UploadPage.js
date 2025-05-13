@@ -93,11 +93,11 @@ function UploadPage() {
 
       <nav className="absolute top-4 left-6 z-10">
         <Link
-          to="/upload"
+          to="/"
           className="flex items-center gap-2 text-white hover:text-yellow-400 transition"
         >
           <span className="text-2xl">←</span>
-          <span className="text-sm font-medium">Upload</span>
+          <span className="text-sm font-medium">Home</span>
         </Link>
       </nav>
 
