@@ -57,11 +57,11 @@ export default function HistoryPage() {
     <div className="bg-[#1E293B] min-h-screen text-white font-sans px-6 py-10">
       <nav className="mb-8">
         <Link
-          to="/"
+          to="/upload"
           className="flex items-center gap-2 text-white hover:text-yellow-400 transition"
         >
           <span className="text-2xl">←</span>
-          <span className="text-sm font-medium">Home</span>
+          <span className="text-sm font-medium">Upload</span>
         </Link>
       </nav>
 
