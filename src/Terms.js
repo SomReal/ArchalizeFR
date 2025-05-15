@@ -9,7 +9,7 @@ export default function Terms() {
         Welcome to Archalize. By using our platform, you agree to the following terms and conditions. If you do not agree, please do not use the service.
       </p>
 
-      <h2 className="text-xl font-semibold mt-6 mb-2">1. Use of the Service</h2>
+      <h2 className="text-xl font-semibold mt-6 mb-2 text-yellow-400">1. Use of the Service</h2>
       <p className="mb-4">
         Archalize provides AI-powered architectural critique based on user-uploaded images. You agree to use the platform responsibly and only upload content you have the rights to share.
       </p>
