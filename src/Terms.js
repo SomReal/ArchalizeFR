@@ -5,7 +5,7 @@ export default function Terms() {
   return (
     <div className="p-8 max-w-4xl mx-auto font-sans text-[#1E293B] bg-white min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-yellow-400">Terms of Service</h1>
-      <p className="mb-4 text-yellow-400">
+      <p className="mb-4">
         Welcome to Archalize. By using our platform, you agree to the following terms and conditions. If you do not agree, please do not use the service.
       </p>
 
