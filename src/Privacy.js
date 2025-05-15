@@ -31,7 +31,7 @@ export default function Privacy() {
 
       <h2 className="text-xl font-semibold mt-6 mb-2">5. Contact</h2>
       <p className="mb-4">
-        If you have any privacy concerns, contact us at <a className="text-blue-700 underline" href="mailto:team@archalize.com">soham@archalize.com</a>.
+        If you have any privacy concerns, contact us at <a className="text-blue-700 underline" href="mailto:soham@archalize.com">soham@archalize.com</a>.
       </p>
       <nav className="absolute top-4 left-6 z-10">
         <Link to="/" className="flex items-center gap-2 text-[#1E293B] hover:text-yellow-400 transition">

@@ -44,7 +44,7 @@ export default function Footer() {
                     <h2 className="text-lg font-bold mb-2 text-[#1E293B]">Contact Us</h2>
                     <p className="text-[#1E293B]">
                         Email us at{" "}
-                        <a href="mailto:team@archalize.com" className="underline">
+                        <a href="mailto:soham@archalize.com" className="underline">
                             soham@archalize.com
                         </a>
                     </p>
