@@ -38,18 +38,18 @@ export default function HistoryPage() {
   }, [user, navigate]);
 
   const handleDelete = async (critiqueId) => {
-  if (!user || !critiqueId) return;
+    if (!user || !critiqueId) return;
 
-  const confirmed = window.confirm("Are you sure you want to delete this critique?");
-  if (!confirmed) return;
+    const confirmed = window.confirm("Are you sure you want to delete this critique?");
+    if (!confirmed) return;
 
-  try {
-    await deleteDoc(doc(db, "users", user.uid, "critiques", critiqueId));
-    setCritiques(prev => prev.filter(c => c.id !== critiqueId));
-  } catch (err) {
-    console.error("Error deleting critique:", err);
-  }
-};
+    try {
+      await deleteDoc(doc(db, "users", user.uid, "critiques", critiqueId));
+      setCritiques(prev => prev.filter(c => c.id !== critiqueId));
+    } catch (err) {
+      console.error("Error deleting critique:", err);
+    }
+  };
 
 
 
@@ -71,33 +71,33 @@ export default function HistoryPage() {
         <p className="text-center text-lg">No critiques found.</p>
       ) : (
         <div className="space-y-6 max-w-4xl mx-auto">
-          {critiques.map((entry) => (        
-  <div
-    key={entry.id}
-    className="bg-white text-[#1E293B] p-6 rounded-lg shadow-lg"
-  >
-    {entry.image && (
-      <img
-        src={entry.image}
-        alt="Uploaded"
-        className="mb-4 w-full max-w-sm mx-auto rounded shadow"
-      />
-    )}
-    <p className="whitespace-pre-wrap">{entry.critique}</p>
-    <div className="mt-2 flex justify-between items-center">
-  <button
-    onClick={() => handleDelete(entry.id)}
-    className="text-red-500 hover:underline text-sm"
-  >
-    Delete
-  </button>
-  <p className="text-sm text-gray-600">
-    {entry.timestamp?.toDate().toLocaleString()}
-  </p>
-</div>
+          {critiques.map((entry) => (
+            <div
+              key={entry.id}
+              className="bg-white text-[#1E293B] p-6 rounded-lg shadow-lg"
+            >
+              {entry.image && (
+                <img
+                  src={entry.image}
+                  alt="Uploaded"
+                  className="mb-4 w-full max-w-sm mx-auto rounded shadow"
+                />
+              )}
+              <p className="whitespace-pre-wrap">{entry.critique}</p>
+              <div className="mt-2 flex justify-between items-center">
+                <button
+                  onClick={() => handleDelete(entry.id)}
+                  className="text-red-500 hover:underline text-sm"
+                >
+                  Delete
+                </button>
+                <p className="text-sm text-gray-600">
+                  {entry.timestamp?.toDate().toLocaleString()}
+                </p>
+              </div>
 
-  </div>
-))}
+            </div>
+          ))}
 
         </div>
       )}
