@@ -6,6 +6,7 @@ import { db } from "./firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 function UploadPage() {
+  const [critiqueSaved, setCritiqueSaved] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -50,13 +51,15 @@ function UploadPage() {
       const critiqueText = res.data.result || "No critique returned.";
       setCritique(critiqueText);
 
-      if (user) {
+      if (user && !critiqueSaved) {
         await addDoc(collection(db, "users", user.uid, "critiques"), {
           critique: critiqueText,
           image: imageBase64,
           timestamp: serverTimestamp(),
         });
+        setCritiqueSaved(true);
       }
+
     } catch (err) {
       console.error("Upload failed:", err);
       setCritique("An error occurred while getting AI critique.");
