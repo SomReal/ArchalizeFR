@@ -47,8 +47,15 @@ function Home() {
             }}
             className="bg-yellow-400 text-black font-semibold px-6 py-3 rounded-2xl shadow-md hover:bg-yellow-300 transition"
           >
-            Try It Now!
+            Try It Now
           </button>
+          <Link
+            to="/floorplan"
+            className="mt-4 inline-block bg-yellow-400 text-black px-6 py-3 rounded hover:bg-yellow-300 font-semibold transition"
+          >
+            Design Floor Plan, Coming Soon
+          </Link>
+
         </section>
       </main>
 

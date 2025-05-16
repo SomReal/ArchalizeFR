@@ -7,6 +7,8 @@ import AuthPage from "./AuthPage";
 import HistoryPage from "./HistoryPage";
 import Terms from "./Terms";
 import Privacy from "./Privacy";
+import FloorPlanPage from "./FloorPlanPage";
+
 
 
 
@@ -21,6 +23,7 @@ function App() {
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/floorplan" element={<FloorPlanPage />} />
       </Routes>
     </Router>
 
