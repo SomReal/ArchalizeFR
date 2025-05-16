@@ -1,3 +1,4 @@
+console.log("Archalize BACKEND STARTED, FILE ACTIVE")
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -7,7 +8,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin: 'https://www.archalize.com', // allow frontend hosted on Vercel
+  origin: ['https://www.archalize.com', 'http://localhost:3000'],
   methods: ['POST'],
   credentials: true,
 }));
@@ -20,6 +21,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+// Image critique route
 app.post('/api/critique', upload.single('image'), async (req, res) => {
   try {
     const base64Image = req.file.buffer.toString('base64');
@@ -43,6 +45,34 @@ app.post('/api/critique', upload.single('image'), async (req, res) => {
     console.error(error);
     res.status(500).json({ result: null });
   }
+});
+
+// Follow-up chat route
+app.post('/api/followup', async (req, res) => {
+  try {
+    const { critique, question } = req.body;
+
+    if (!critique || !question) {
+      return res.status(400).json({ error: 'Missing critique or question' });
+    }
+
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [
+        { role: 'system', content: 'You are an expert architecture AI assistant. Be concise, clear, and helpful.' },
+        { role: 'user', content: `Here was the original critique:\n${critique}` },
+        { role: 'user', content: `Follow-up question: ${question}` }
+      ],
+      max_tokens: 500,
+    });
+
+    res.json({ reply: response.choices[0].message.content });
+  } catch (error) {
+    console.error('Follow-up error:', error);
+    res.status(500).json({ reply: 'Error generating follow-up response.' });
+  }
+  console.log("✅ /api/followup was hit");
+
 });
 
 const PORT = process.env.PORT || 5000;

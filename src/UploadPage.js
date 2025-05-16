@@ -5,65 +5,85 @@ import { useAuth } from "./AuthContext";
 import { db } from "./firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
-
 function UploadPage() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/auth");
-    }
-  }, [user, navigate]);
 
   const [imagePreview, setImagePreview] = useState(null);
   const [critique, setCritique] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [chatHistory, setChatHistory] = useState([]);
+  const [userMessage, setUserMessage] = useState("");
+
+  useEffect(() => {
+    if (!user) navigate("/auth");
+  }, [user, navigate]);
+
   const handleImageChange = async (event) => {
-  const file = event.target.files[0];
-  if (!file) return;
+    const file = event.target.files[0];
+    if (!file) return;
 
-  setCritique("");
-  setImagePreview(URL.createObjectURL(file));
-  setLoading(true);
+    setCritique("");
+    setChatHistory([]);
+    setImagePreview(URL.createObjectURL(file));
+    setLoading(true);
 
-  const formData = new FormData();
-  formData.append("image", file);
+    const formData = new FormData();
+    formData.append("image", file);
 
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-
-  const imageBase64 = await toBase64(file);
-
-  try {
-    const res = await axios.post("https://ai.archalize.com/api/critique", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
-
-    const critiqueText = res.data.result || "No critique returned.";
-    setCritique(critiqueText);
-
-    if (user) {
-      await addDoc(collection(db, "users", user.uid, "critiques"), {
-        critique: critiqueText,
-        image: imageBase64,
-        timestamp: serverTimestamp(),
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
       });
-    }
-  } catch (err) {
-    console.error("Upload failed:", err);
-    setCritique("An error occurred while getting AI critique.");
-  }
 
-  setLoading(false);
-};
-  
+    const imageBase64 = await toBase64(file);
+
+    try {
+      const res = await axios.post("https://ai.archalize.com/api/critique", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      const critiqueText = res.data.result || "No critique returned.";
+      setCritique(critiqueText);
+
+      if (user) {
+        await addDoc(collection(db, "users", user.uid, "critiques"), {
+          critique: critiqueText,
+          image: imageBase64,
+          timestamp: serverTimestamp(),
+        });
+      }
+    } catch (err) {
+      console.error("Upload failed:", err);
+      setCritique("An error occurred while getting AI critique.");
+    }
+
+    setLoading(false);
+  };
+
+  const handleSendFollowUp = async () => {
+    if (!userMessage.trim()) return;
+
+    try {
+      const res = await axios.post("https://ai.archalize.com/api/followup", {
+        critique,
+        question: userMessage,
+      });
+
+      const reply = res.data.reply || "No response.";
+
+      setChatHistory((prev) => [...prev, { user: userMessage, bot: reply }]);
+      setUserMessage("");
+    } catch (err) {
+      console.error("Follow-up failed:", err);
+      setChatHistory((prev) => [...prev, { user: userMessage, bot: "Error getting response." }]);
+      setUserMessage("");
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -75,21 +95,20 @@ function UploadPage() {
 
   return (
     <>
-     <div className="absolute top-4 right-4 flex items-center gap-4">
-  <Link
-    to="/history"
-    className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-semibold"
-  >
-    View History
-  </Link>
-  <button
-    onClick={handleLogout}
-    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-  >
-    Logout
-  </button>
-</div>
-
+      <div className="absolute top-4 right-4 flex items-center gap-4">
+        <Link
+          to="/history"
+          className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-semibold"
+        >
+          View History
+        </Link>
+        <button
+          onClick={handleLogout}
+          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+        >
+          Logout
+        </button>
+      </div>
 
       <nav className="absolute top-4 left-6 z-10">
         <Link
@@ -127,13 +146,41 @@ function UploadPage() {
         )}
 
         {critique && (
-          <div className="mt-6 bg-white text-[#1E293B] p-6 rounded-lg shadow-lg max-w-2xl">
-            <h2 className="text-2xl font-bold mb-4 text-center">Architectural Critique</h2>
-            <p className="text-lg whitespace-pre-wrap">{critique}</p>
-                <div className="mt-4 text-center">
-    </div>
+          <>
+            <div className="mt-6 bg-white text-[#1E293B] p-6 rounded-lg shadow-lg max-w-2xl w-full">
+              <h2 className="text-2xl font-bold mb-4 text-center">Architectural Critique</h2>
+              <p className="text-lg whitespace-pre-wrap">{critique}</p>
+            </div>
 
-          </div>
+            <div className="mt-8 w-full max-w-2xl">
+              <h2 className="text-lg font-semibold mb-2">Talk to Archalize</h2>
+
+              <div className="bg-gray-800 rounded-md p-4 max-h-64 overflow-y-auto mb-4">
+                {chatHistory.map((chat, index) => (
+                  <div key={index} className="mb-2">
+                    <p className="text-blue-400 font-semibold">You: <span className="text-white">{chat.user}</span></p>
+                    <p className="text-green-400 font-semibold">Archalize: <span className="text-white">{chat.bot}</span></p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex">
+                <input
+                  type="text"
+                  value={userMessage}
+                  onChange={(e) => setUserMessage(e.target.value)}
+                  placeholder="Ask a follow-up..."
+                  className="flex-grow px-4 py-2 rounded-l-md text-black"
+                />
+                <button
+                  onClick={handleSendFollowUp}
+                  className="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600"
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </>
         )}
       </div>
     </>
