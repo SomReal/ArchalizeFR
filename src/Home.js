@@ -13,12 +13,21 @@ function Home() {
   return (
     <div className="flex flex-col min-h-screen font-sans bg-[#1E293B] text-white">
       {/* Navbar */}
-      <nav className="px-6 py-4 flex justify-between items-center shadow-md">
+      <nav className="flex justify-between items-center px-6 py-4 bg-[#1E293B] text-white shadow-md">
+        {/* Left side: logo */}
         <h1 className="text-xl font-bold">Archalize</h1>
-        <Link to="/about" className="text-yellow-400 hover:underline font-medium">
-          About
-        </Link>
+
+        {/* Right side: nav links */}
+        <div className="flex gap-6 items-center">
+          <Link to="/about" className="font-medium hover:text-yellow-400 text-yellow-400">
+            About
+          </Link>
+          <Link to="/floorplan" className="font-medium hover:text-yellow-400 text-yellow-400">
+            Render Floor Plan
+          </Link>
+        </div>
       </nav>
+
 
       {/* Hero Section */}
       <main className="flex-grow">
@@ -49,13 +58,6 @@ function Home() {
           >
             Try It Now
           </button>
-          <Link
-            to="/floorplan"
-            className="mt-4 inline-block bg-yellow-400 text-black px-6 py-3 rounded hover:bg-yellow-300 font-semibold transition"
-          >
-            Design Floor Plan, Coming Soon
-          </Link>
-
         </section>
       </main>
 
