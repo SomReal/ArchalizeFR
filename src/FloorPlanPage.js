@@ -43,16 +43,21 @@ function FloorPlanPage() {
 
 
     return (
-        <div className="min-h-screen bg-[#1E293B] text-white font-sans p-6">
-            <div className="flex justify-between mb-4">
-                <h1 className="text-2xl font-bold">Upload a Floor Plan</h1>
+        <div className="min-h-screen bg-[#1E293B] text-white font-sans flex flex-col items-center pt-8 px-6">
+            <div className="relative w-full mb-4">
+                {/* Home link on the left */}
                 <Link
                     to="/"
-                    className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-semibold"
+                    className="absolute left-0 flex items-center gap-2 text-white hover:text-yellow-400 transition"
                 >
-                    Home
+                    <span className="text-2xl">←</span>
+                    <span className="text-sm font-medium">Home</span>
                 </Link>
+
+                {/* Title centered */}
+                <h1 className="text-2xl font-bold text-center">Upload a Floor Plan</h1>
             </div>
+
 
             <input
                 type="file"
