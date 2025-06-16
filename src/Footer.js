@@ -35,7 +35,22 @@ export default function Footer() {
                             <Link to="/privacy" className="text-[#1E293B]">
                                 Privacy Policy
                             </Link>
+
                         </li>
+                        <li>
+                            <li>
+                                <a
+                                    href="https://statuspage.incident.io/archalize"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-[#1E293B]"
+                                >
+                                    Status
+                                </a>
+                            </li>
+
+                        </li>
+
                     </ul>
 
                 </div>
