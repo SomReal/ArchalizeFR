@@ -137,12 +137,13 @@ function UploadPage() {
             hover:file:bg-yellow-300"
         />
 
-        {imagePreview && (
+        {imagePreview && !critique && (
           <div className="mt-6 flex flex-col items-center">
             <h2 className="text-xl font-semibold mb-2 text-white">Preview:</h2>
             <img src={imagePreview} alt="Uploaded Preview" className="w-80 rounded-lg shadow-lg mb-6" />
           </div>
         )}
+
 
         {loading && (
           <p className="text-yellow-400 text-lg font-semibold animate-pulse">Analyzing with AI...</p>
@@ -150,39 +151,55 @@ function UploadPage() {
 
         {critique && (
           <>
-            <div className="mt-6 bg-white text-[#1E293B] p-6 rounded-lg shadow-lg max-w-2xl w-full">
-              <h2 className="text-2xl font-bold mb-4 text-center">Architectural Critique</h2>
-              <p className="text-lg whitespace-pre-wrap">{critique}</p>
-            </div>
+            <div className="mt-12 w-full max-w-6xl flex flex-col lg:flex-row gap-8 items-start">
+              {/* LEFT COLUMN: Image + Chat */}
+              <div className="flex-1 flex flex-col h-full">
+                {/* Image */}
+                <div className="mb-6">
+                  <img
+                    src={imagePreview}
+                    alt="Uploaded Preview"
+                    className="w-full max-w-md rounded-lg shadow"
+                  />
+                </div>
 
-            <div className="mt-8 w-full max-w-2xl">
-              <h2 className="text-lg font-semibold mb-2">Talk to Archalize</h2>
-
-              <div className="bg-gray-800 rounded-md p-4 max-h-64 overflow-y-auto mb-4">
-                {chatHistory.map((chat, index) => (
-                  <div key={index} className="mb-2">
-                    <p className="text-blue-400 font-semibold">You: <span className="text-white">{chat.user}</span></p>
-                    <p className="text-green-400 font-semibold">Archalize: <span className="text-white">{chat.bot}</span></p>
+                {/* Chat Box (stretches to match critique height) */}
+                <div className="flex-1 bg-gray-800 rounded-md p-4 text-white flex flex-col justify-between">
+                  <div className="overflow-y-auto mb-4">
+                    <h2 className="text-lg font-semibold mb-2">Talk to Archalize</h2>
+                    {chatHistory.map((chat, index) => (
+                      <div key={index} className="mb-2">
+                        <p className="text-blue-400 font-semibold">You: <span className="text-white">{chat.user}</span></p>
+                        <p className="text-green-400 font-semibold">Archalize: <span className="text-white">{chat.bot}</span></p>
+                      </div>
+                    ))}
                   </div>
-                ))}
+
+                  <div className="flex mt-auto">
+                    <input
+                      type="text"
+                      value={userMessage}
+                      onChange={(e) => setUserMessage(e.target.value)}
+                      placeholder="Ask a follow-up..."
+                      className="flex-grow px-4 py-2 rounded-l-md text-black"
+                    />
+                    <button
+                      onClick={handleSendFollowUp}
+                      className="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600"
+                    >
+                      Send
+                    </button>
+                  </div>
+                </div>
               </div>
 
-              <div className="flex">
-                <input
-                  type="text"
-                  value={userMessage}
-                  onChange={(e) => setUserMessage(e.target.value)}
-                  placeholder="Ask a follow-up..."
-                  className="flex-grow px-4 py-2 rounded-l-md text-black"
-                />
-                <button
-                  onClick={handleSendFollowUp}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600"
-                >
-                  Send
-                </button>
+              {/* RIGHT COLUMN: Critique */}
+              <div className="flex-1 bg-white text-[#1E293B] p-6 rounded-lg shadow-lg h-full">
+                <h2 className="text-2xl font-bold mb-4">Architectural Critique</h2>
+                <p className="whitespace-pre-wrap text-base leading-relaxed">{critique}</p>
               </div>
             </div>
+
           </>
         )}
       </div>
