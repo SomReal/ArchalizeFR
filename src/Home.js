@@ -35,20 +35,28 @@ function Home() {
       <main className="flex-grow bg-[#E5E7EB] text-[#1E293B] font-sans">
         <section className="relative pt-12 pb-20 text-center px-6 bg-[#E5E7EB] overflow-hidden">
           {/* Background graphics */}
-          <div className="absolute inset-0 pointer-events-none z-0">
-            <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <svg
+              className="absolute top-0 left-0 w-full h-full"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 1000 2000"
+              preserveAspectRatio="xMidYMid slice"
+            >
               <defs>
-                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                  <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1E293B" strokeWidth="0.4" />
+                <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                  <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1E293B" strokeWidth="0.8" />
                 </pattern>
               </defs>
-              <rect width="100%" height="100%" fill="url(#grid)" opacity="0.06" />
-              <circle cx="50%" cy="50%" r="250" stroke="#1E293B" strokeWidth="0.4" opacity="0.04" />
-              <circle cx="50%" cy="50%" r="400" stroke="#1E293B" strokeWidth="0.4" opacity="0.03" />
-              <circle cx="50%" cy="50%" r="550" stroke="#1E293B" strokeWidth="0.4" opacity="0.02" />
-            </svg>
-          </div>
 
+              <rect width="1000" height="2000" fill="url(#grid)" opacity="0.06" />
+
+              {/* Ellipses — centered at 500, 1000 (middle of SVG) */}
+              <ellipse cx="500" cy="1000" rx="250" ry="250" stroke="#1E293B" strokeWidth="1" opacity="0.04" />
+              <ellipse cx="500" cy="1000" rx="350" ry="350" stroke="#1E293B" strokeWidth="1" opacity="0.03" />
+              <ellipse cx="500" cy="1000" rx="450" ry="450" stroke="#1E293B" strokeWidth="1" opacity="0.02" />
+            </svg>
+
+          </div>
           {/* Main content */}
           <div className="z-10 flex flex-col items-center">
             <img src="/Archalize-SoloNOBG.png" alt="Owl Logo" className="w-[250px] h-[250px] mb-4 -mt-5" />
