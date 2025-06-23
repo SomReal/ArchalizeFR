@@ -89,12 +89,16 @@ function UploadPage() {
   };
 
   const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-  };
+  try {
+    await logout();
+  } catch (err) {
+    console.error("Logout failed", err);
+  } finally {
+    navigate("/");
+  }
+};
+
+
 
   return (
     <>
