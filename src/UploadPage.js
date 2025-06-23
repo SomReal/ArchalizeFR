@@ -89,57 +89,84 @@ function UploadPage() {
   };
 
   const handleLogout = async () => {
-  try {
-    await logout();
-  } catch (err) {
-    console.error("Logout failed", err);
-  } finally {
-    navigate("/");
-  }
-};
+    try {
+      await logout();
+    } catch (err) {
+      console.error("Logout failed", err);
+    } finally {
+      navigate("/");
+    }
+  };
 
 
 
   return (
     <>
-      <div className="absolute top-4 right-4 flex items-center gap-4">
-        <Link
-          to="/history"
-          className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-semibold"
-        >
-          View History
-        </Link>
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Logout
-        </button>
-      </div>
-
       <nav className="absolute top-4 left-6 z-10">
         <Link
           to="/"
           className="flex items-center gap-2 text-white hover:text-yellow-400 transition"
         >
-          <span className="text-2xl">←</span>
-          <span className="text-sm font-medium">Home</span>
+          <span className="text-2xl text-[#1E293B]">←</span>
+          <span className="text-sm font-medium text-[#1E293B]">Home</span>
         </Link>
       </nav>
 
-      <div className="flex flex-col items-center justify-center min-h-screen bg-[#1E293B] font-sans px-6 text-white">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#E5E7EB] font-sans px-6 text-[#1E293B] relative overflow-hidden">
         <h1 className="text-3xl font-bold mb-6">Upload a Building Photo</h1>
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 2000" preserveAspectRatio="xMidYMid slice">
+            <defs>
+              <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1E293B" strokeWidth="1" />
+              </pattern>
+            </defs>
+            <rect width="1000" height="2000" fill="url(#grid)" opacity="0.06" />
+            <ellipse cx="500" cy="1000" rx="250" ry="250" stroke="#1E293B" strokeWidth="1" opacity="0.03" />
+            <ellipse cx="500" cy="1000" rx="350" ry="350" stroke="#1E293B" strokeWidth="1" opacity="0.02" />
+            <ellipse cx="500" cy="1000" rx="450" ry="450" stroke="#1E293B" strokeWidth="1" opacity="0.01" />
+          </svg>
+          <div className="absolute top-4 right-4 flex items-center gap-4 z-10">
+            <Link
+              to="/history"
+              className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-semibold"
+            >
+              View History
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
+              Logout
+            </button>
+          </div>
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="mb-6 block w-full max-w-sm text-sm text-white file:mr-4 file:py-2 file:px-4
-            file:rounded-full file:border-0
-            file:text-sm file:font-semibold
-            file:bg-yellow-400 file:text-black
-            hover:file:bg-yellow-300"
-        />
+        </div>
+        <img src="/Archalize-SoloNOBG.png" alt="Owl Logo" className="w-[200px] h-[200px] mb-4 z-10" />
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight text-center z-10">
+          <span className="block text-[#1E293B]">Upload Your</span>
+          <span className="block text-yellow-400">Building or Blueprint</span>
+        </h1>
+        <p className="text-lg sm:text-xl max-w-2xl mb-6 text-[#1E293B]/90 text-center z-10">
+          Upload any building photo or floor plan and receive professional-grade architectural analysis in seconds.
+        </p>
+
+        <div className="relative z-10">
+          <input
+            id="fileUpload"
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+          <label
+            htmlFor="fileUpload"
+            className="inline-block bg-yellow-400 text-[#1E293B] font-semibold px-6 py-2 rounded-full cursor-pointer hover:bg-blue-500 transition"
+          >
+            Upload Image
+          </label>
+        </div>
+
 
         {imagePreview && !critique && (
           <div className="mt-6 flex flex-col items-center">
