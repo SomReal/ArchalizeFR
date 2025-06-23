@@ -5,6 +5,7 @@ import { useAuth } from "./AuthContext";
 import { db } from "./firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
+
 function UploadPage() {
   const [critiqueSaved, setCritiqueSaved] = useState(false);
   const { user, logout } = useAuth();
@@ -16,6 +17,7 @@ function UploadPage() {
 
   const [chatHistory, setChatHistory] = useState([]);
   const [userMessage, setUserMessage] = useState("");
+  
 
   useEffect(() => {
     if (!user) navigate("/auth");
@@ -100,6 +102,7 @@ function UploadPage() {
 
 
 
+
   return (
     <>
       <nav className="absolute top-4 left-6 z-10">
@@ -126,22 +129,22 @@ function UploadPage() {
             <ellipse cx="500" cy="1000" rx="350" ry="350" stroke="#1E293B" strokeWidth="1" opacity="0.02" />
             <ellipse cx="500" cy="1000" rx="450" ry="450" stroke="#1E293B" strokeWidth="1" opacity="0.01" />
           </svg>
-          <div className="absolute top-4 right-4 flex items-center gap-4 z-10">
+        </div>
+        <div className="absolute top-4 right-4 flex items-center gap-4 z-50">
             <Link
               to="/history"
-              className="bg-yellow-400 text-black px-4 py-2 rounded hover:bg-yellow-300 font-semibold"
+              className="bg-yellow-400 text-[#1E293B] px-4 py-2 rounded font-semibold hover:bg-yellow-300 transition"
             >
               View History
             </Link>
+
             <button
               onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+              className="bg-red-600 text-white px-4 py-2 rounded font-semibold hover:bg-red-500 transition"
             >
               Logout
             </button>
           </div>
-
-        </div>
         <img src="/Archalize-SoloNOBG.png" alt="Owl Logo" className="w-[200px] h-[200px] mb-4 z-10" />
         <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight text-center z-10">
           <span className="block text-[#1E293B]">Upload Your</span>
@@ -195,9 +198,9 @@ function UploadPage() {
                 </div>
 
                 {/* Chat Box (stretches to match critique height) */}
-                <div className="flex-1 bg-gray-800 rounded-md p-4 text-white flex flex-col justify-between">
+                <div className="flex-1 bg-[##1E293B] rounded-md p-4 text-white flex flex-col justify-between">
                   <div className="overflow-y-auto mb-4">
-                    <h2 className="text-lg font-semibold mb-2">Talk to Archalize</h2>
+                    <h2 className="text-lg font-semibold mb-2 text-[#1E293B]">Talk to Archalize</h2>
                     {chatHistory.map((chat, index) => (
                       <div key={index} className="mb-2">
                         <p className="text-blue-400 font-semibold">You: <span className="text-white">{chat.user}</span></p>
