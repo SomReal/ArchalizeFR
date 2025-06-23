@@ -44,16 +44,16 @@ function Home() {
             >
               <defs>
                 <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-                  <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1E293B" strokeWidth="0.8" />
+                  <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#1E293B" strokeWidth="1" />
                 </pattern>
               </defs>
 
               <rect width="1000" height="2000" fill="url(#grid)" opacity="0.06" />
 
               {/* Ellipses — centered at 500, 1000 (middle of SVG) */}
-              <ellipse cx="500" cy="1000" rx="250" ry="250" stroke="#1E293B" strokeWidth="1" opacity="0.04" />
-              <ellipse cx="500" cy="1000" rx="350" ry="350" stroke="#1E293B" strokeWidth="1" opacity="0.03" />
-              <ellipse cx="500" cy="1000" rx="450" ry="450" stroke="#1E293B" strokeWidth="1" opacity="0.02" />
+              <ellipse cx="500" cy="1000" rx="250" ry="250" stroke="#1E293B" strokeWidth="1" opacity="0.03" />
+              <ellipse cx="500" cy="1000" rx="350" ry="350" stroke="#1E293B" strokeWidth="1" opacity="0.02" />
+              <ellipse cx="500" cy="1000" rx="450" ry="450" stroke="#1E293B" strokeWidth="1" opacity="0.01" />
             </svg>
 
           </div>
