@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function About() {
   return (
-    <div className="min-h-screen relative bg-white text-[#1E293B] font-sans px-6 py-20 overflow-hidden">
+    <div className="min-h-screen relative bg-[#fefeff] text-[#1E293B] font-sans px-6 py-20 overflow-hidden">
 
       {/* Background Logo */}
       <img
