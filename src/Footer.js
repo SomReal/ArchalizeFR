@@ -11,7 +11,7 @@ export default function Footer() {
                     <h2 className="text-lg font-bold mb-2 text-[#1E293B]">Elevate Your Design.</h2>
                     <div className="flex gap-4 mt-4">
                         <a
-                            href="https://www.instagram.com/archalizeofficial/"
+                            href="https://www.instagram.com/archalizeoffical?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                             target="_blank"
                             rel="noopener noreferrer"
                         >
