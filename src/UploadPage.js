@@ -116,7 +116,6 @@ function UploadPage() {
       </nav>
 
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#E5E7EB] font-sans px-6 text-[#1E293B] relative overflow-hidden">
-        <h1 className="text-3xl font-bold mb-6">Upload a Building Photo</h1>
         <div className="absolute inset-0 z-0 pointer-events-none">
           <svg className="absolute top-0 left-0 w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 2000" preserveAspectRatio="xMidYMid slice">
             <defs>
