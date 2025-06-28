@@ -17,7 +17,7 @@ function UploadPage() {
 
   const [chatHistory, setChatHistory] = useState([]);
   const [userMessage, setUserMessage] = useState("");
-  
+
 
   useEffect(() => {
     if (!user) navigate("/auth");
@@ -93,14 +93,11 @@ function UploadPage() {
   const handleLogout = async () => {
     try {
       await logout();
+      window.location.href = "/"; // full reset to clear everything
     } catch (err) {
       console.error("Logout failed", err);
-    } finally {
-      navigate("/");
     }
   };
-
-
 
 
   return (
@@ -130,20 +127,20 @@ function UploadPage() {
           </svg>
         </div>
         <div className="absolute top-4 right-4 flex items-center gap-4 z-50">
-            <Link
-              to="/history"
-              className="bg-yellow-400 text-[#1E293B] px-4 py-2 rounded font-semibold hover:bg-yellow-300 transition"
-            >
-              View History
-            </Link>
+          <Link
+            to="/history"
+            className="bg-yellow-400 text-[#1E293B] px-4 py-2 rounded font-semibold hover:bg-yellow-300 transition"
+          >
+            View History
+          </Link>
 
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 text-white px-4 py-2 rounded font-semibold hover:bg-red-500 transition"
-            >
-              Logout
-            </button>
-          </div>
+          <button
+            onClick={handleLogout}
+            className="bg-red-600 text-white px-4 py-2 rounded font-semibold hover:bg-red-500 transition"
+          >
+            Logout
+          </button>
+        </div>
         <img src="/Archalize-SoloNOBG.png" alt="Owl Logo" className="w-[200px] h-[200px] mb-4 z-10" />
         <h1 className="text-4xl sm:text-5xl font-bold mb-4 leading-tight text-center z-10">
           <span className="block text-[#1E293B]">Upload Your</span>

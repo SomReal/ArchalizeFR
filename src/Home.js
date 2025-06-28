@@ -70,12 +70,22 @@ function Home() {
               Get insights on style, sustainability, historical influences, and design improvements.
             </p>
 
-            <button
-              onClick={() => (user ? navigate("/upload") : navigate("/auth"))}
-              className="bg-yellow-400 text-black font-semibold px-6 py-3 rounded-xl shadow hover:bg-yellow-300 transition flex items-center gap-2"
-            >
-              <i className="fas fa-upload"></i> Upload & Analyze
-            </button>
+            {user ? (
+              <button
+                onClick={() => navigate("/upload")}
+                className="bg-yellow-400 text-black font-semibold px-6 py-3 rounded-xl shadow hover:bg-yellow-300 transition flex items-center gap-2"
+              >
+                <i className="fas fa-upload"></i> Upload & Analyze
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate("/auth")}
+                className="bg-yellow-400 text-[#1E293B] font-semibold px-6 py-3 rounded-xl shadow hover:bg-blue-500 transition flex items-center gap-2"
+              >
+                <i className="fas fa-sign-in-alt text-[#1E293B]"></i> Sign In to Analyze
+              </button>
+            )}
+
           </div>
         </section>
 
