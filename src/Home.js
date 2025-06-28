@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
-import Footer from "./Footer";
 
 function Home() {
   const { user } = useAuth();
@@ -99,10 +98,6 @@ function Home() {
         </section>*/}
 
       </main>
-
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 

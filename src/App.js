@@ -8,6 +8,8 @@ import HistoryPage from "./HistoryPage";
 import Terms from "./Terms";
 import Privacy from "./Privacy";
 import FloorPlanPage from "./FloorPlanPage";
+import Footer from "./Footer";
+
 
 
 
@@ -25,6 +27,7 @@ function App() {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/floorplan" element={<FloorPlanPage />} />
       </Routes>
+      <Footer />
     </Router>
 
   );
