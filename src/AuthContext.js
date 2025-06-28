@@ -1,29 +1,35 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, setPersistence, browserSessionPersistence, signOut } from "firebase/auth";
+import {
+  onAuthStateChanged,
+  setPersistence,
+  browserSessionPersistence,
+  signOut
+} from "firebase/auth";
 import { auth } from "./firebase";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setPersistence(auth, browserSessionPersistence).then(() => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
         setUser(currentUser);
+        setLoading(false);
       });
       return () => unsubscribe();
     });
   }, []);
 
-  const logout = () => signOut(auth); // ✅ Define logout
+  const logout = () => signOut(auth);
 
   return (
-    <AuthContext.Provider value={{ user, logout }}>
+    <AuthContext.Provider value={{ user, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// ✅ useAuth returns both user and logout
 export const useAuth = () => useContext(AuthContext);
