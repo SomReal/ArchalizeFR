@@ -20,7 +20,7 @@ function Home() {
         {/* Right side: nav links */}
         <div className="flex gap-6 items-center">
           <Link to="/about" className="font-medium text-[#1E293B]">
-            About
+            Our Story
           </Link>
           {/*
           <Link to="/floorplan" className="font-medium hover:text-yellow-400 text-yellow-400">
