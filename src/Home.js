@@ -32,7 +32,7 @@ function Home() {
 
       {/* Hero Section */}
       <main className="flex-grow bg-[#E5E7EB] text-[#1E293B] font-sans">
-        <section className="relative pt-12 pb-20 text-center px-6 bg-[#E5E7EB] overflow-hidden">
+        <section className="relative pt-10 pb-20 text-center px-6 bg-[#E5E7EB] overflow-hidden">
           {/* Background graphics */}
           <div className="absolute inset-0 z-0 pointer-events-none">
             <svg
