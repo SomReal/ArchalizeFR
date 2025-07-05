@@ -18,9 +18,13 @@ function Home() {
 
         {/* Right side: nav links */}
         <div className="flex gap-6 items-center">
+          <Link to="/samples" className="font-medium text-[#1E293B]">
+            View Sample Critiques
+          </Link>
           <Link to="/about" className="font-medium text-[#1E293B]">
             Our Story
           </Link>
+          
           {/*
           <Link to="/floorplan" className="font-medium hover:text-yellow-400 text-yellow-400">
             Render Floor Plan

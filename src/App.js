@@ -9,7 +9,7 @@ import Terms from "./Terms";
 import Privacy from "./Privacy";
 import FloorPlanPage from "./FloorPlanPage";
 import Footer from "./Footer";
-
+import Samples from "./Samples";
 
 
 
@@ -26,6 +26,7 @@ function App() {
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/floorplan" element={<FloorPlanPage />} />
+        <Route path="/samples" element={<Samples />} />
       </Routes>
       <Footer />
     </Router>
