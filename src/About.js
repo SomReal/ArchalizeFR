@@ -5,13 +5,13 @@ function About() {
   return (
     <div className="min-h-screen relative bg-[#E5E7EB] text-[#1E293B] font-sans px-6 py-20 overflow-hidden">
 
-      {/* Background Logo */}
+      {/* Background Logo 
       <img
         src="/Archalize-SoloNOBGLO.png"
         alt="Background Owl Logo"
         className="absolute inset-0 w-[1200px] opacity-[0.8] mx-auto pointer-events-none select-none"
         style={{ top: "5%", left: "0", right: "0", margin: "0 auto", zIndex: 0 }}
-      />
+      />*/}
 
       {/* Back to Home */}
       <nav className="absolute top-4 left-6 z-10">
