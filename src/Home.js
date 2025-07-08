@@ -38,7 +38,7 @@ function Home() {
       <main className="flex-grow bg-[#E5E7EB] text-[#1E293B] font-sans">
         <section className="relative pt-10 pb-20 text-center px-6 bg-[#E5E7EB] overflow-hidden">
           {/* Background graphics */}
-          <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 z-0 pointer-events-none h-full">
             <svg
               className="absolute top-0 left-0 w-full h-full"
               xmlns="http://www.w3.org/2000/svg"
