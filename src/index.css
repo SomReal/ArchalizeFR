@@ -13,3 +13,13 @@
 .animate-scroll {
   animation: scroll 30s linear infinite;
 }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+

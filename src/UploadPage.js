@@ -181,7 +181,7 @@ function UploadPage() {
 
         {critique && (
           <>
-            <div className="mt-12 w-full max-w-6xl flex flex-col lg:flex-row gap-8 items-start">
+            <div className="mt-12 w-full max-w-7xl mx-auto flex flex-col lg:flex-row gap-8 items-start px-4">
               {/* LEFT COLUMN: Image + Chat */}
               <div className="flex-1 flex flex-col h-full">
                 {/* Image */}
