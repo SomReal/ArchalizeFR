@@ -27,12 +27,12 @@ app.post('/api/critique', upload.single('image'), async (req, res) => {
     const base64Image = req.file.buffer.toString('base64');
 
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt-latest',
       messages: [
         {
           role: 'user',
           content: [
-            { type: 'text', text: 'Critique this building in terms of architectural style, sustainability, and improvements.' },
+            { type: 'text', text: 'Say Hi' },
             { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}` } }
           ],
         },
