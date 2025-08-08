@@ -32,7 +32,7 @@ app.post('/api/critique', upload.single('image'), async (req, res) => {
         {
           role: 'user',
           content: [
-            { type: 'text', text: 'Say Hi' },
+            { type: 'text', text: 'Critique this building in terms of architectural style, sustainability, and improvements.' },
             { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}` } }
           ],
         },
