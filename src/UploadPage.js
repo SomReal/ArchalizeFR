@@ -199,8 +199,8 @@ function UploadPage() {
                     <h2 className="text-lg font-semibold mb-2 text-[#1E293B]">Talk to Archalize</h2>
                     {chatHistory.map((chat, index) => (
                       <div key={index} className="mb-2">
-                        <p className="text-blue-400 font-semibold">You: <span className="text-white">{chat.user}</span></p>
-                        <p className="text-green-400 font-semibold">Archalize: <span className="text-white">{chat.bot}</span></p>
+                        <p className="text-blue-400 font-semibold">You: <span className="text-black">{chat.user}</span></p>
+                        <p className="text-green-400 font-semibold">Archalize: <span className="text-black">{chat.bot}</span></p>
                       </div>
                     ))}
                   </div>
